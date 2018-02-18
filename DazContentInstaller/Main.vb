@@ -3,7 +3,7 @@ Imports SevenZip
 
 
 
-Public Class Form1
+Public Class Main
 
     'Defined Constants
     Const INSTALLERS_PATH As String = "\installFiles"
@@ -13,8 +13,8 @@ Public Class Form1
     Const TEMP_UNPACK As String = "\temp"
 
     'Global Objects
-    Dim log As New Logging("syslog.txt")
-    Dim cfg As New Config("config.txt")
+    Public log As New Logging("syslog.txt")
+    Public cfg As New Config("config.txt")
 
 
 
@@ -74,17 +74,11 @@ Public Class Form1
 
 
     Private Sub btn_install_Click(sender As Object, e As EventArgs) Handles btn_install.Click
-        '1) Get list of .zip/.rar files in directory:
-        log.debug("Searching for installers (.zip/.rar) in:" + Application.StartupPath + INSTALLED_SUCCESS_PATH)
-        Dim fileList As List(Of String) = Directory.GetFiles(Application.StartupPath + INSTALLERS_PATH).ToList
-        log.debug("Files Found to Install:" + fileList.Count.ToString)
-
-        '2) Unzip to temp dir
-        For Each file As String In fileList
-            log.debug(" -Extracting to temp:" + file)
-            Dim uncomp As New SevenZipExtractor(file)
-            uncomp.ExtractArchive(Application.StartupPath + TEMP_UNPACK)
-        Next
+        Dim daz As New DazUnpack()
+        daz.archiveFilesPath = Application.StartupPath + INSTALLERS_PATH
+        daz.tempUnpackPath = Application.StartupPath + TEMP_UNPACK
+        daz.targetRuntime = Application.StartupPath + "\runtime"        '''DEBUG
+        daz.processFiles()
 
 
     End Sub
