@@ -52,11 +52,19 @@
     ''' </summary>
     ''' <param name="msg"></param>
     Private Sub writeToLog(ByVal msg As String)
-        Dim timestamp As String = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-        msg = timestamp + " | " + msg
-        Dim sw As New System.IO.StreamWriter(Application.StartupPath + "\" + filename)
-        sw.WriteLine(msg)
-        sw.Close()
+        Try
+            Dim timestamp As String = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+            msg = timestamp + " | " + msg
+            Dim sw As New System.IO.StreamWriter(Application.StartupPath + "\" + filename, True)
+            sw.WriteLine(msg)
+            sw.Close()
+            System.Diagnostics.Debug.Print(msg)
+        Catch ex As Exception
+            MsgBox("Error creating system log file at " + Application.StartupPath + "\" + filename +
+                   ". Am I installed or placed in a read/write folder? Try moving the exacutable and running again." +
+                   " System Exception:" + ex.Message)
+        End Try
+
     End Sub
 
 
