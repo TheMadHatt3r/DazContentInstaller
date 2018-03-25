@@ -32,7 +32,6 @@ Partial Class Main
         Me.runtimes_txt = New System.Windows.Forms.ListBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.cb_moveOnInstall = New System.Windows.Forms.CheckBox()
-        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -108,22 +107,11 @@ Partial Class Main
         Me.cb_moveOnInstall.Text = "Move Archive On Install"
         Me.cb_moveOnInstall.UseVisualStyleBackColor = True
         '
-        'CheckBox2
-        '
-        Me.CheckBox2.AutoSize = True
-        Me.CheckBox2.Location = New System.Drawing.Point(12, 155)
-        Me.CheckBox2.Name = "CheckBox2"
-        Me.CheckBox2.Size = New System.Drawing.Size(81, 17)
-        Me.CheckBox2.TabIndex = 5
-        Me.CheckBox2.Text = "CheckBox2"
-        Me.CheckBox2.UseVisualStyleBackColor = True
-        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(482, 296)
-        Me.Controls.Add(Me.CheckBox2)
         Me.Controls.Add(Me.cb_moveOnInstall)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.runtimes_txt)
@@ -132,7 +120,7 @@ Partial Class Main
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Main"
-        Me.Text = "Daz Archive Installer | Version 1.0.0"
+        Me.Text = "Daz Archive Installer | Version 0.0.1 - BETA"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
@@ -148,6 +136,5 @@ Partial Class Main
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents runtimes_txt As ListBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents CheckBox2 As CheckBox
     Friend WithEvents cb_moveOnInstall As CheckBox
 End Class
