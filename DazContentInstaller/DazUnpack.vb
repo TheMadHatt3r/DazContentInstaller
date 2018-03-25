@@ -94,6 +94,8 @@ Public Class DazUnpack
         Dim fileList As List(Of String) = getListOfArchives(installFilesPath)
         For Each file As String In fileList
             Dim errorOnInstall As Boolean = False
+            Dim FileInfo As New FileInfo(file)
+            Main.log.info("Processing Installer File: " + FileInfo.Name)
 
             '2) Unzip to temp dir
             If Not unzipToTemp(file) Then
