@@ -7,11 +7,25 @@ Public Class DazUnpack
     Private installFilesPath As String = Nothing
     Private tempArchiveUnpackPath As String = Nothing
     Private runtimePath As String = Nothing
+    Private moveOnComplete As Boolean = Nothing
 
 
     Public Sub New()
 
     End Sub
+
+    ''' <summary>
+    ''' Required: Set path for where .zip/.rar files are moved to after processing
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property moveArchiveOnComplete
+        Set(value)
+            moveOnComplete = value
+        End Set
+        Get
+            Return moveOnComplete
+        End Get
+    End Property
 
     ''' <summary>
     ''' Required: Set path for where .zip/.rar files are moved to after processing
@@ -91,13 +105,15 @@ Public Class DazUnpack
             '   This could ignore some folders if you are >2 levels deep... But slim chance those matter.
 
 
-
-            '5) Cleanup \temp
+            '6) Cleanup \temp
             Main.log.debug(" -Clearing \temp")
             cleanDirectory(tempArchiveUnpackPath)
 
-            '6) Move or Del .zip/.rar
-            moveToFinishedLocation(file, processedArchivesPath)
+            '7) Move or Del .zip/.rar
+            If moveArchiveOnComplete Then
+                Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath)
+                moveToFinishedLocation(file, processedArchivesPath)
+            End If
 
         Next
     End Function
@@ -157,7 +173,7 @@ Public Class DazUnpack
             For Each tmp In dirList
                 Dim d As String = tmp.Split("\")(tmp.Split("\").GetUpperBound(0))
                 'DO ALL MATCHING HERE
-                If d = "data" Or d = "Runtime" Then
+                If d = "data" Or d = "Runtime" Or d = "runtime" Then
                     fs.found = True
                     fs.location = tmp
                     fs.type = d

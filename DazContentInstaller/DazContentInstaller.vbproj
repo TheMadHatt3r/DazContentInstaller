@@ -77,6 +77,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutHelp.Designer.vb">
+      <DependentUpon>AboutHelp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AboutHelp.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Config.vb" />
     <Compile Include="DazUnpack.vb" />
     <Compile Include="Main.vb">
@@ -104,6 +110,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AboutHelp.resx">
+      <DependentUpon>AboutHelp.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.vb</DependentUpon>
     </EmbeddedResource>

@@ -30,7 +30,7 @@ Partial Class Main
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.runtimes_txt = New System.Windows.Forms.ListBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.cb_moveOnInstall = New System.Windows.Forms.CheckBox()
         Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -64,7 +64,7 @@ Partial Class Main
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'SettingsToolStripMenuItem
@@ -97,15 +97,15 @@ Partial Class Main
         Me.Label1.TabIndex = 3
         Me.Label1.Text = "Runtime To Install To:"
         '
-        'CheckBox1
+        'cb_moveOnInstall
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(12, 132)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(81, 17)
-        Me.CheckBox1.TabIndex = 4
-        Me.CheckBox1.Text = "CheckBox1"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.cb_moveOnInstall.AutoSize = True
+        Me.cb_moveOnInstall.Location = New System.Drawing.Point(12, 132)
+        Me.cb_moveOnInstall.Name = "cb_moveOnInstall"
+        Me.cb_moveOnInstall.Size = New System.Drawing.Size(139, 17)
+        Me.cb_moveOnInstall.TabIndex = 4
+        Me.cb_moveOnInstall.Text = "Move Archive On Install"
+        Me.cb_moveOnInstall.UseVisualStyleBackColor = True
         '
         'CheckBox2
         '
@@ -123,7 +123,7 @@ Partial Class Main
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(482, 296)
         Me.Controls.Add(Me.CheckBox2)
-        Me.Controls.Add(Me.CheckBox1)
+        Me.Controls.Add(Me.cb_moveOnInstall)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.runtimes_txt)
         Me.Controls.Add(Me.btn_install)
@@ -146,6 +146,6 @@ Partial Class Main
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents runtimes_txt As ListBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents CheckBox1 As CheckBox
     Friend WithEvents CheckBox2 As CheckBox
+    Friend WithEvents cb_moveOnInstall As CheckBox
 End Class

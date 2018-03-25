@@ -81,6 +81,7 @@ Public Class Main
 
     Private Sub btn_install_Click(sender As Object, e As EventArgs) Handles btn_install.Click
         Dim daz As New DazUnpack()
+        daz.moveArchiveOnComplete = Me.cb_moveOnInstall.Checked
         daz.processedPath = Application.StartupPath + INSTALLED_PATH
         daz.archiveFilesPath = Application.StartupPath + INSTALLERS_PATH
         daz.tempUnpackPath = Application.StartupPath + TEMP_UNPACK
@@ -88,5 +89,14 @@ Public Class Main
         daz.processFiles()
 
 
+    End Sub
+
+    ' TOOL STRIP ACTIONS
+    Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
+        Dim about = New AboutHelp()
+        about.Show()
+    End Sub
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        Me.Close()
     End Sub
 End Class
