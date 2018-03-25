@@ -21,7 +21,7 @@ Public Class Main
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         log.info("Program Started.")
         createRequiredDirectories()
-        unpackDlls()
+        'unpackDlls()
         'Set proper SevenZip dll location
         If Environment.Is64BitOperatingSystem Then
             log.debug("System Arch: x64, Setting 7-Zip DLL = 7z64.dll")
@@ -37,6 +37,8 @@ Public Class Main
         Next
 
     End Sub
+
+
 
 
     ''' <summary>
@@ -63,20 +65,7 @@ Public Class Main
 
     End Sub
 
-    ''' <summary>
-    ''' Unpacks 7-Zip DLLs. Selects proper library link based on system arch type.
-    ''' </summary>
-    Private Sub unpackDlls()
-        Try
-            File.WriteAllBytes(Application.StartupPath + "\7z.dll", My.Resources._7z)
-            File.WriteAllBytes(Application.StartupPath + "\7z64.dll", My.Resources._7z64)
-        Catch ex As Exception
-            MsgBox("Error exctracting 7-Zip libraries." +
-                   ". Am I installed or placed in a read/write folder? Try moving the exacutable and running again." +
-                   " System Exception:" + ex.Message)
-        End Try
 
-    End Sub
 
 
     Private Sub btn_install_Click(sender As Object, e As EventArgs) Handles btn_install.Click
