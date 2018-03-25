@@ -7,7 +7,7 @@ Public Class Main
 
     'Defined Constants
     Const INSTALLERS_PATH As String = "\installFiles"
-    Const INSTALLED_PATH As String = "\installed"
+    Const INSTALLED_PATH As String = "\processed"
     Const INSTALLED_SUCCESS_PATH As String = INSTALLED_PATH + "\success"
     Const INSTALLED_FAILED_PATH As String = INSTALLED_PATH + "\failed"
     Const TEMP_UNPACK As String = "\temp"
@@ -30,6 +30,12 @@ Public Class Main
             log.debug("System Arch: x86, Setting 7-Zip DLL = 7z.dll")
             SevenZipBase.SetLibraryPath(Application.StartupPath + "\7z.dll")
         End If
+        'Once config Obj is created, It reads in runtimes. So populate UI
+        Me.runtimes_txt.Items.Clear()
+        For Each line As String In cfg.runtimeList
+            Me.runtimes_txt.Items.Add(line)
+        Next
+
     End Sub
 
 
@@ -75,6 +81,7 @@ Public Class Main
 
     Private Sub btn_install_Click(sender As Object, e As EventArgs) Handles btn_install.Click
         Dim daz As New DazUnpack()
+        daz.processedPath = Application.StartupPath + INSTALLED_PATH
         daz.archiveFilesPath = Application.StartupPath + INSTALLERS_PATH
         daz.tempUnpackPath = Application.StartupPath + TEMP_UNPACK
         daz.targetRuntime = Application.StartupPath + "\runtime"        '''DEBUG

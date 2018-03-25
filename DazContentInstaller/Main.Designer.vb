@@ -25,10 +25,10 @@ Partial Class Main
         Me.btn_install = New System.Windows.Forms.Button()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.runtimes = New System.Windows.Forms.ListBox()
+        Me.runtimes_txt = New System.Windows.Forms.ListBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.CheckBox2 = New System.Windows.Forms.CheckBox()
@@ -61,6 +61,12 @@ Partial Class Main
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
         '
+        'ExitToolStripMenuItem
+        '
+        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
+        Me.ExitToolStripMenuItem.Text = "Exit"
+        '
         'SettingsToolStripMenuItem
         '
         Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
@@ -73,20 +79,14 @@ Partial Class Main
         Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(52, 20)
         Me.AboutToolStripMenuItem.Text = "About"
         '
-        'ExitToolStripMenuItem
+        'runtimes_txt
         '
-        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.ExitToolStripMenuItem.Text = "Exit"
-        '
-        'runtimes
-        '
-        Me.runtimes.FormattingEnabled = True
-        Me.runtimes.Items.AddRange(New Object() {"Runtime 1", "Runtime 2", "C:\Users\Collin\Documents\GitHub\DazContentInstaller\DazContentInstaller", "Runtime 3", "Runtime 4", "Line 6"})
-        Me.runtimes.Location = New System.Drawing.Point(12, 57)
-        Me.runtimes.Name = "runtimes"
-        Me.runtimes.Size = New System.Drawing.Size(458, 69)
-        Me.runtimes.TabIndex = 2
+        Me.runtimes_txt.FormattingEnabled = True
+        Me.runtimes_txt.Items.AddRange(New Object() {"Runtime 1", "Runtime 2", "C:\Users\Collin\Documents\GitHub\DazContentInstaller\DazContentInstaller", "Runtime 3", "Runtime 4", "Line 6"})
+        Me.runtimes_txt.Location = New System.Drawing.Point(12, 57)
+        Me.runtimes_txt.Name = "runtimes_txt"
+        Me.runtimes_txt.Size = New System.Drawing.Size(458, 69)
+        Me.runtimes_txt.TabIndex = 2
         '
         'Label1
         '
@@ -117,7 +117,7 @@ Partial Class Main
         Me.CheckBox2.Text = "CheckBox2"
         Me.CheckBox2.UseVisualStyleBackColor = True
         '
-        'Form1
+        'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -125,12 +125,12 @@ Partial Class Main
         Me.Controls.Add(Me.CheckBox2)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.runtimes)
+        Me.Controls.Add(Me.runtimes_txt)
         Me.Controls.Add(Me.btn_install)
         Me.Controls.Add(Me.MenuStrip1)
         Me.MainMenuStrip = Me.MenuStrip1
-        Me.Name = "Form1"
-        Me.Text = "Form1"
+        Me.Name = "Main"
+        Me.Text = "Daz Archive Installer | Version 1.0.0"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
@@ -144,7 +144,7 @@ Partial Class Main
     Friend WithEvents SettingsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AboutToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents runtimes As ListBox
+    Friend WithEvents runtimes_txt As ListBox
     Friend WithEvents Label1 As Label
     Friend WithEvents CheckBox1 As CheckBox
     Friend WithEvents CheckBox2 As CheckBox

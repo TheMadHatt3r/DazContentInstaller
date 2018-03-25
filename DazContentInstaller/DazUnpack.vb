@@ -3,7 +3,8 @@ Imports SevenZip
 
 Public Class DazUnpack
 
-    Private installerArchivePath As String = Nothing
+    Private processedArchivesPath As String = Nothing
+    Private installFilesPath As String = Nothing
     Private tempArchiveUnpackPath As String = Nothing
     Private runtimePath As String = Nothing
 
@@ -12,6 +13,18 @@ Public Class DazUnpack
 
     End Sub
 
+    ''' <summary>
+    ''' Required: Set path for where .zip/.rar files are moved to after processing
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property processedPath
+        Set(value)
+            processedArchivesPath = value
+        End Set
+        Get
+            Return processedArchivesPath
+        End Get
+    End Property
 
     ''' <summary>
     ''' Required: Set path for .zip/.rar files to process
@@ -19,10 +32,10 @@ Public Class DazUnpack
     ''' <returns></returns>
     Public Property archiveFilesPath
         Set(value)
-            installerArchivePath = value
+            installFilesPath = value
         End Set
         Get
-            Return installerArchivePath
+            Return installFilesPath
         End Get
     End Property
 
@@ -59,30 +72,68 @@ Public Class DazUnpack
 
     Public Function processFiles()
         '1) Get list of .zip/.rar files in directory:
-        Dim fileList As List(Of String) = getListOfArchives(installerArchivePath)
+        Dim fileList As List(Of String) = getListOfArchives(installFilesPath)
         For Each file As String In fileList
             '2) Unzip to temp dir
             unzipToTemp(file)
+
             '3) Search dir for one of valid types (Runtime, data etc.)
             Dim fs As New FinderStruc
             Dim res As String = searchTempForInstallPoint(tempArchiveUnpackPath, fs)
             Main.log.debug(" -Type of runtime found:" + fs.type)
+
             '4) Copy files from fs.location point to runtime folder of same type.
+            Main.log.debug(" -Copy " + fs.location + " To " + runtimePath + "\" + fs.type)
+            CopyDirectory(fs.location, runtimePath + "\" + fs.type)
+
 
             '5) Copy files/folders at same level as fs.location (minus runtime) to same level in master runtime.
             '   This could ignore some folders if you are >2 levels deep... But slim chance those matter.
+
+
 
             '5) Cleanup \temp
             Main.log.debug(" -Clearing \temp")
             cleanDirectory(tempArchiveUnpackPath)
 
-            '6) Move or Del .zop/.rar
+            '6) Move or Del .zip/.rar
+            moveToFinishedLocation(file, processedArchivesPath)
 
         Next
     End Function
 
 
 
+
+
+    ''' <summary>
+    ''' No recursive function to copy directories in .NET?
+    ''' So this will copy a directory and all contents to another.
+    ''' </summary>
+    ''' <param name="sourcePath"></param>
+    ''' <param name="destinationPath"></param>
+    Private Sub CopyDirectory(ByVal sourcePath As String, ByVal destinationPath As String)
+        Dim sourceDirectoryInfo As New System.IO.DirectoryInfo(sourcePath)
+
+        ' If the destination folder don't exist then create it
+        If Not System.IO.Directory.Exists(destinationPath) Then
+            System.IO.Directory.CreateDirectory(destinationPath)
+        End If
+
+        Dim fileSystemInfo As System.IO.FileSystemInfo
+        For Each fileSystemInfo In sourceDirectoryInfo.GetFileSystemInfos
+            Dim destinationFileName As String =
+            System.IO.Path.Combine(destinationPath, fileSystemInfo.Name)
+
+            ' Now check whether its a file or a folder and take action accordingly
+            If TypeOf fileSystemInfo Is System.IO.FileInfo Then
+                System.IO.File.Copy(fileSystemInfo.FullName, destinationFileName, True)
+            Else
+                ' Recursively call the mothod to copy all the neste folders
+                CopyDirectory(fileSystemInfo.FullName, destinationFileName)
+            End If
+        Next
+    End Sub
 
 
     Private Class FinderStruc
@@ -158,6 +209,16 @@ Public Class DazUnpack
                 Main.log.err(" -Error cleaning \temp", ex)
             End Try
         Next
+    End Sub
+
+    Private Sub moveToFinishedLocation(ByVal zipFileOrigin As String, ByVal holdDir As String)
+        Try
+            Dim zipFileInfo As New FileInfo(zipFileOrigin)
+            My.Computer.FileSystem.MoveFile(zipFileOrigin, holdDir + "\" + zipFileInfo.Name)
+        Catch ex As Exception
+            Main.log.err(" -Error moving zip file to processed dir.", ex)
+        End Try
+
     End Sub
 
 End Class
