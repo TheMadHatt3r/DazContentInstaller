@@ -42,7 +42,6 @@ Partial Class Splash
         Me.Controls.Add(Me.Label1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "Splash"
-        Me.Opacity = 0.5R
         Me.Text = "Splash"
         Me.ResumeLayout(False)
 

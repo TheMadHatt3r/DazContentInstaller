@@ -1,5 +1,7 @@
 ﻿Imports System.IO
-Imports SevenZip
+Imports SevenZipExtractor
+Imports System.Runtime.InteropServices
+
 
 Public Class DazUnpack
 
@@ -8,6 +10,9 @@ Public Class DazUnpack
     Private tempArchiveUnpackPath As String = Nothing
     Private runtimePath As String = Nothing
     Private moveOnComplete As Boolean = Nothing
+
+    Public installSuccessCount As Integer = 0
+    Public installFailCount As Integer = 0
 
 
     Public Sub New()
@@ -88,13 +93,27 @@ Public Class DazUnpack
         '1) Get list of .zip/.rar files in directory:
         Dim fileList As List(Of String) = getListOfArchives(installFilesPath)
         For Each file As String In fileList
+
             '2) Unzip to temp dir
-            unzipToTemp(file)
+            If Not unzipToTemp(file) Then
+                installFailCount += 1
+                Continue For
+            End If
 
             '3) Search dir for one of valid types (Runtime, data etc.)
             Dim fs As New FinderStruc
             Dim res As String = searchTempForInstallPoint(tempArchiveUnpackPath, fs)
-            Main.log.debug(" -Type of runtime found:" + fs.type)
+            If res = "NO_STRUC_FOUND" Then
+                Main.log.info(" -Runtime point NOT FOUND!")
+                installFailCount += 1
+                Continue For
+            ElseIf res = "FOUND" Then
+                Main.log.debug(" -Type of runtime found:" + fs.type)
+            Else
+                Main.log.err(" -Error finding runtime point? This is a program error, and should never happen...")
+                installFailCount += 1
+                Continue For
+            End If
 
             '4) Copy files from fs.location point to runtime folder of same type.
             Main.log.debug(" -Copy " + fs.location + " To " + runtimePath + "\" + fs.type)
@@ -173,7 +192,7 @@ Public Class DazUnpack
             For Each tmp In dirList
                 Dim d As String = tmp.Split("\")(tmp.Split("\").GetUpperBound(0))
                 'DO ALL MATCHING HERE
-                If d = "data" Or d = "Runtime" Or d = "runtime" Then
+                If d = "data" Or d = "Data" Or d = "Runtime" Or d = "runtime" Then
                     fs.found = True
                     fs.location = tmp
                     fs.type = d
@@ -201,13 +220,20 @@ Public Class DazUnpack
         Return fileList
     End Function
 
-
-    Private Sub unzipToTemp(ByVal file As String)
+    'Returns false on error.
+    Private Function unzipToTemp(ByVal file As String) As Boolean
         '2) Unzip to temp dir
         Main.log.info(" -Extracting to temp:" + file)
-        Dim uncomp As New SevenZipExtractor(file)
-        uncomp.ExtractArchive(tempArchiveUnpackPath)
-    End Sub
+        Try
+            Dim uncomp As New ArchiveFile(file)
+            'Dim ftype As String = file.Split(".")(file.Split.Count)
+            uncomp.Extract(tempArchiveUnpackPath, True)
+            Return True
+        Catch ex As Exception
+            Main.log.err(" -Error uncompressing install archive:" + file, ex)
+            Return False
+        End Try
+    End Function
 
 
     Private Sub cleanDirectory(ByVal dir As String)
@@ -235,6 +261,44 @@ Public Class DazUnpack
             Main.log.err(" -Error moving zip file to processed dir.", ex)
         End Try
 
+    End Sub
+
+
+
+    <DllImport("7z.dll")> Public Shared Function MessageBox(ByVal hWnd As Integer,
+        ByVal txt As String, ByVal caption As String,
+        ByVal typ As Integer) As Integer
+    End Function
+
+    'Turns out due to licencing, basically nothing can unRAR but rar itself...
+    Private Sub UnRar(ByVal WorkingDirectory As String, ByVal filepath As String)
+        ' Microsoft.Win32 and System.Diagnostics namespaces are imported
+        Dim objRegKey As Microsoft.Win32.RegistryKey
+        objRegKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey("WinRAR\Shell\Open\Command")
+
+        ' Windows 7 Registry entry for WinRAR Open Command
+        Dim obj As Object = objRegKey.GetValue("")
+
+        Dim objRarPath As String = obj.ToString()
+        objRarPath = objRarPath.Substring(1, objRarPath.Length - 7)
+        objRegKey.Close()
+
+        Dim objArguments As String
+        ' in the following format
+        ' " X G:\Downloads\samplefile.rar G:\Downloads\sampleextractfolder\"
+        objArguments = " X " & " " & filepath & " " + " " + WorkingDirectory
+
+        Dim objStartInfo As New ProcessStartInfo()
+        ' The Process object must have the UseShellExecute property set to false in order to use environment variables.
+        objStartInfo.UseShellExecute = False
+        objStartInfo.FileName = objRarPath
+        objStartInfo.Arguments = objArguments
+        objStartInfo.WindowStyle = ProcessWindowStyle.Hidden
+        objStartInfo.WorkingDirectory = WorkingDirectory & "\"
+
+        Dim objProcess As New Process()
+        objProcess.StartInfo = objStartInfo
+        objProcess.Start()
     End Sub
 
 End Class

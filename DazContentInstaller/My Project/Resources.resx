@@ -118,13 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="SevenZipSharp" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\packages\SevenZipSharp.Net45.1.0.14\lib\net45\SevenZipSharp.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="_7z" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\lib\7z.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="_7z64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\lib\7z64.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="SevenZipExtractor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\SevenZipExtractor.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

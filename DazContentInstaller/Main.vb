@@ -1,5 +1,5 @@
 ﻿Imports System.IO
-Imports SevenZip
+Imports SevenZipExtractor
 
 
 
@@ -25,10 +25,10 @@ Public Class Main
         'Set proper SevenZip dll location
         If Environment.Is64BitOperatingSystem Then
             log.debug("System Arch: x64, Setting 7-Zip DLL = 7z64.dll")
-            SevenZipBase.SetLibraryPath(Application.StartupPath + "\7z64.dll")
+            'SevenZipBase.SetLibraryPath(Application.StartupPath + "\7z64.dll")
         Else
             log.debug("System Arch: x86, Setting 7-Zip DLL = 7z.dll")
-            SevenZipBase.SetLibraryPath(Application.StartupPath + "\7z.dll")
+            'SevenZipBase.SetLibraryPath(Application.StartupPath + "\7z.dll")
         End If
         'Once config Obj is created, It reads in runtimes. So populate UI
         Me.runtimes_txt.Items.Clear()
