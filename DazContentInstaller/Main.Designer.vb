@@ -32,6 +32,8 @@ Partial Class Main
         Me.runtimes_txt = New System.Windows.Forms.ListBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.cb_moveOnInstall = New System.Windows.Forms.CheckBox()
+        Me.lbl_success = New System.Windows.Forms.Label()
+        Me.lbl_fail = New System.Windows.Forms.Label()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -100,6 +102,8 @@ Partial Class Main
         'cb_moveOnInstall
         '
         Me.cb_moveOnInstall.AutoSize = True
+        Me.cb_moveOnInstall.Checked = True
+        Me.cb_moveOnInstall.CheckState = System.Windows.Forms.CheckState.Checked
         Me.cb_moveOnInstall.Location = New System.Drawing.Point(12, 132)
         Me.cb_moveOnInstall.Name = "cb_moveOnInstall"
         Me.cb_moveOnInstall.Size = New System.Drawing.Size(139, 17)
@@ -107,11 +111,31 @@ Partial Class Main
         Me.cb_moveOnInstall.Text = "Move Archive On Install"
         Me.cb_moveOnInstall.UseVisualStyleBackColor = True
         '
+        'lbl_success
+        '
+        Me.lbl_success.AutoSize = True
+        Me.lbl_success.Location = New System.Drawing.Point(9, 156)
+        Me.lbl_success.Name = "lbl_success"
+        Me.lbl_success.Size = New System.Drawing.Size(57, 13)
+        Me.lbl_success.TabIndex = 5
+        Me.lbl_success.Text = "Success:0"
+        '
+        'lbl_fail
+        '
+        Me.lbl_fail.AutoSize = True
+        Me.lbl_fail.Location = New System.Drawing.Point(9, 172)
+        Me.lbl_fail.Name = "lbl_fail"
+        Me.lbl_fail.Size = New System.Drawing.Size(52, 13)
+        Me.lbl_fail.TabIndex = 6
+        Me.lbl_fail.Text = "Failures:0"
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(482, 199)
+        Me.Controls.Add(Me.lbl_fail)
+        Me.Controls.Add(Me.lbl_success)
         Me.Controls.Add(Me.cb_moveOnInstall)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.runtimes_txt)
@@ -120,7 +144,7 @@ Partial Class Main
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Main"
-        Me.Text = "Daz Archive Installer | Version 0.0.1 - BETA"
+        Me.Text = "Daz Archive Installer | Version 0.0.2 - BETA"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
@@ -137,4 +161,6 @@ Partial Class Main
     Friend WithEvents runtimes_txt As ListBox
     Friend WithEvents Label1 As Label
     Friend WithEvents cb_moveOnInstall As CheckBox
+    Friend WithEvents lbl_success As Label
+    Friend WithEvents lbl_fail As Label
 End Class

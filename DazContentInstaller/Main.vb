@@ -77,6 +77,9 @@ Public Class Main
         daz.targetRuntime = Application.StartupPath + "\runtime"        '''DEBUG
         daz.processFiles()
 
+        Me.lbl_fail.Text = "Failures:" + daz.installFailCount.ToString
+        Me.lbl_success.Text = "Success:" + daz.installSuccessCount.ToString
+
 
     End Sub
 

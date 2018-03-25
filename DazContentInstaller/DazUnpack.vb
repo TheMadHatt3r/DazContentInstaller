@@ -89,53 +89,66 @@ Public Class DazUnpack
 
 
 
-    Public Function processFiles()
+    Public Sub processFiles()
         '1) Get list of .zip/.rar files in directory:
         Dim fileList As List(Of String) = getListOfArchives(installFilesPath)
         For Each file As String In fileList
+            Dim errorOnInstall As Boolean = False
 
             '2) Unzip to temp dir
             If Not unzipToTemp(file) Then
-                installFailCount += 1
-                Continue For
+                errorOnInstall = True
             End If
 
             '3) Search dir for one of valid types (Runtime, data etc.)
             Dim fs As New FinderStruc
-            Dim res As String = searchTempForInstallPoint(tempArchiveUnpackPath, fs)
-            If res = "NO_STRUC_FOUND" Then
-                Main.log.info(" -Runtime point NOT FOUND!")
-                installFailCount += 1
-                Continue For
-            ElseIf res = "FOUND" Then
-                Main.log.debug(" -Type of runtime found:" + fs.type)
-            Else
-                Main.log.err(" -Error finding runtime point? This is a program error, and should never happen...")
-                installFailCount += 1
-                Continue For
+            If Not errorOnInstall Then
+                Dim res As String = searchTempForInstallPoint(tempArchiveUnpackPath, fs)
+                If res = "NO_STRUC_FOUND" Then
+                    Main.log.info(" -Runtime point NOT FOUND!")
+                    errorOnInstall = True
+                ElseIf res = "FOUND" Then
+                    Main.log.debug(" -Type of runtime found:" + fs.type)
+                Else
+                    Main.log.err(" -Error finding runtime point? This is a program error, and should never happen...")
+                    errorOnInstall = True
+                End If
             End If
 
+
             '4) Copy files from fs.location point to runtime folder of same type.
-            Main.log.debug(" -Copy " + fs.location + " To " + runtimePath + "\" + fs.type)
-            CopyDirectory(fs.location, runtimePath + "\" + fs.type)
+            If Not errorOnInstall Then
+                Main.log.debug(" -Copy " + fs.location + " To " + runtimePath + "\" + fs.type)
+                CopyDirectory(fs.location, runtimePath + "\" + fs.type)
+            End If
 
 
             '5) Copy files/folders at same level as fs.location (minus runtime) to same level in master runtime.
             '   This could ignore some folders if you are >2 levels deep... But slim chance those matter.
-
+            '   ?????????? What was this??????? Do we need step 5?
 
             '6) Cleanup \temp
-            Main.log.debug(" -Clearing \temp")
-            cleanDirectory(tempArchiveUnpackPath)
+            If Not errorOnInstall Then
+                Main.log.debug(" -Clearing \temp")
+                cleanDirectory(tempArchiveUnpackPath)
+            End If
 
             '7) Move or Del .zip/.rar
             If moveArchiveOnComplete Then
-                Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath)
-                moveToFinishedLocation(file, processedArchivesPath)
+                'If issue, and file skipped:
+                If errorOnInstall Then
+                    Me.installFailCount += 1
+                    Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath + "\success")
+                    moveToFinishedLocation(file, processedArchivesPath + "\success")
+                Else
+                    Me.installSuccessCount += 1
+                    Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath + "\failed")
+                    moveToFinishedLocation(file, processedArchivesPath + "\failed")
+                End If
             End If
 
         Next
-    End Function
+    End Sub
 
 
 
@@ -228,6 +241,7 @@ Public Class DazUnpack
             Dim uncomp As New ArchiveFile(file)
             'Dim ftype As String = file.Split(".")(file.Split.Count)
             uncomp.Extract(tempArchiveUnpackPath, True)
+            uncomp.Dispose()
             Return True
         Catch ex As Exception
             Main.log.err(" -Error uncompressing install archive:" + file, ex)
@@ -263,42 +277,5 @@ Public Class DazUnpack
 
     End Sub
 
-
-
-    <DllImport("7z.dll")> Public Shared Function MessageBox(ByVal hWnd As Integer,
-        ByVal txt As String, ByVal caption As String,
-        ByVal typ As Integer) As Integer
-    End Function
-
-    'Turns out due to licencing, basically nothing can unRAR but rar itself...
-    Private Sub UnRar(ByVal WorkingDirectory As String, ByVal filepath As String)
-        ' Microsoft.Win32 and System.Diagnostics namespaces are imported
-        Dim objRegKey As Microsoft.Win32.RegistryKey
-        objRegKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey("WinRAR\Shell\Open\Command")
-
-        ' Windows 7 Registry entry for WinRAR Open Command
-        Dim obj As Object = objRegKey.GetValue("")
-
-        Dim objRarPath As String = obj.ToString()
-        objRarPath = objRarPath.Substring(1, objRarPath.Length - 7)
-        objRegKey.Close()
-
-        Dim objArguments As String
-        ' in the following format
-        ' " X G:\Downloads\samplefile.rar G:\Downloads\sampleextractfolder\"
-        objArguments = " X " & " " & filepath & " " + " " + WorkingDirectory
-
-        Dim objStartInfo As New ProcessStartInfo()
-        ' The Process object must have the UseShellExecute property set to false in order to use environment variables.
-        objStartInfo.UseShellExecute = False
-        objStartInfo.FileName = objRarPath
-        objStartInfo.Arguments = objArguments
-        objStartInfo.WindowStyle = ProcessWindowStyle.Hidden
-        objStartInfo.WorkingDirectory = WorkingDirectory & "\"
-
-        Dim objProcess As New Process()
-        objProcess.StartInfo = objStartInfo
-        objProcess.Start()
-    End Sub
 
 End Class
