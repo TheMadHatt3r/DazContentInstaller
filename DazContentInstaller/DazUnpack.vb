@@ -140,11 +140,11 @@ Public Class DazUnpack
                 'If issue, and file skipped:
                 If errorOnInstall Then
                     Me.installFailCount += 1
-                    Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath + "\success")
+                    Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath + "\failed")
                     moveToFinishedLocation(file, processedArchivesPath + "\failed")
                 Else
                     Me.installSuccessCount += 1
-                    Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath + "\failed")
+                    Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath + "\success")
                     moveToFinishedLocation(file, processedArchivesPath + "\success")
                 End If
             End If

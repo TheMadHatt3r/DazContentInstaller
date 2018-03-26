@@ -121,4 +121,10 @@
   <data name="SevenZipExtractor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\packages\SevenZipExtractor.1.0.12\lib\net45\SevenZipExtractor.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="_7z" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\lib\7z.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_7z64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\lib\7z64.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
