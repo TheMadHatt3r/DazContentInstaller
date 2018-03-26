@@ -74,7 +74,11 @@ Public Class Main
         daz.processedPath = Application.StartupPath + INSTALLED_PATH
         daz.archiveFilesPath = Application.StartupPath + INSTALLERS_PATH
         daz.tempUnpackPath = Application.StartupPath + TEMP_UNPACK
-        daz.targetRuntime = Application.StartupPath + "\runtime"        '''DEBUG
+        'daz.targetRuntime = Application.StartupPath + "\runtime"        '''DEBUG
+        daz.targetRuntime = Me.runtimes_txt.SelectedItem
+        log.debug("Path for finished files:" + Application.StartupPath + INSTALLED_PATH)
+        log.debug("Path for install files to process:" + Application.StartupPath + INSTALLERS_PATH)
+        log.debug("Target Runtime:" + Me.runtimes_txt.SelectedItem)
         daz.processFiles()
 
         Me.lbl_fail.Text = "Failures:" + daz.installFailCount.ToString
