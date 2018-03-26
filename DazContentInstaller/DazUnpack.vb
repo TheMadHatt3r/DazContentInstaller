@@ -10,6 +10,7 @@ Public Class DazUnpack
     Private tempArchiveUnpackPath As String = Nothing
     Private runtimePath As String = Nothing
     Private moveOnComplete As Boolean = Nothing
+    Private lib7zipPath As String = Nothing
 
     Public installSuccessCount As Integer = 0
     Public installFailCount As Integer = 0
@@ -18,6 +19,19 @@ Public Class DazUnpack
     Public Sub New()
 
     End Sub
+
+    ''' <summary>
+    ''' Required: Set path for where .zip/.rar files are moved to after processing
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property sevenZipDllPath
+        Set(value)
+            lib7zipPath = value
+        End Set
+        Get
+            Return lib7zipPath
+        End Get
+    End Property
 
     ''' <summary>
     ''' Required: Set path for where .zip/.rar files are moved to after processing
@@ -152,35 +166,34 @@ Public Class DazUnpack
 
 
 
-
     ''' <summary>
     ''' No recursive function to copy directories in .NET?
     ''' So this will copy a directory and all contents to another.
     ''' </summary>
     ''' <param name="sourcePath"></param>
     ''' <param name="destinationPath"></param>
-    Private Sub CopyDirectory(ByVal sourcePath As String, ByVal destinationPath As String)
+    Private Function CopyDirectory(ByVal sourcePath As String, ByVal destinationPath As String) As Boolean
         Dim sourceDirectoryInfo As New System.IO.DirectoryInfo(sourcePath)
 
-        ' If the destination folder don't exist then create it
-        If Not System.IO.Directory.Exists(destinationPath) Then
-            System.IO.Directory.CreateDirectory(destinationPath)
-        End If
-
         Dim fileSystemInfo As System.IO.FileSystemInfo
-        For Each fileSystemInfo In sourceDirectoryInfo.GetFileSystemInfos
-            Dim destinationFileName As String =
-            System.IO.Path.Combine(destinationPath, fileSystemInfo.Name)
+        Try
+            For Each fileSystemInfo In sourceDirectoryInfo.GetFileSystemInfos
+                Dim destinationFileName As String =
+                System.IO.Path.Combine(destinationPath, fileSystemInfo.Name)
 
-            ' Now check whether its a file or a folder and take action accordingly
-            If TypeOf fileSystemInfo Is System.IO.FileInfo Then
-                System.IO.File.Copy(fileSystemInfo.FullName, destinationFileName, True)
-            Else
-                ' Recursively call the mothod to copy all the neste folders
-                CopyDirectory(fileSystemInfo.FullName, destinationFileName)
-            End If
-        Next
-    End Sub
+                ' Now check whether its a file or a folder and take action accordingly
+                If TypeOf fileSystemInfo Is System.IO.FileInfo Then
+                    System.IO.File.Copy(fileSystemInfo.FullName, destinationFileName, True)
+                Else
+                    ' Recursively call the mothod to copy all the neste folders
+                    CopyDirectory(fileSystemInfo.FullName, destinationFileName)
+                End If
+            Next
+        Catch ex As Exception
+            Main.log.err(" -Error copying files to runtime directory.", ex)
+        End Try
+        Return True
+    End Function
 
 
     Private Class FinderStruc
@@ -237,7 +250,7 @@ Public Class DazUnpack
         '2) Unzip to temp dir
         Main.log.info(" -Extracting to temp:" + file)
         Try
-            Dim uncomp As New ArchiveFile(file)
+            Dim uncomp As New ArchiveFile(file, lib7zipPath)
             'Dim ftype As String = file.Split(".")(file.Split.Count)
             uncomp.Extract(tempArchiveUnpackPath, True)
             uncomp.Dispose()

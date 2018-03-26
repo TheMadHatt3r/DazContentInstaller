@@ -39,8 +39,9 @@ Partial Class Main
         '
         'btn_install
         '
+        Me.btn_install.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btn_install.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_install.Location = New System.Drawing.Point(288, 132)
+        Me.btn_install.Location = New System.Drawing.Point(288, 161)
         Me.btn_install.Name = "btn_install"
         Me.btn_install.Size = New System.Drawing.Size(182, 54)
         Me.btn_install.TabIndex = 0
@@ -66,7 +67,7 @@ Partial Class Main
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'SettingsToolStripMenuItem
@@ -83,11 +84,13 @@ Partial Class Main
         '
         'runtimes_txt
         '
+        Me.runtimes_txt.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.runtimes_txt.FormattingEnabled = True
         Me.runtimes_txt.Items.AddRange(New Object() {"Runtime 1", "Runtime 2", "C:\Users\Collin\Documents\GitHub\DazContentInstaller\DazContentInstaller", "Runtime 3", "Runtime 4", "Line 6"})
         Me.runtimes_txt.Location = New System.Drawing.Point(12, 57)
         Me.runtimes_txt.Name = "runtimes_txt"
-        Me.runtimes_txt.Size = New System.Drawing.Size(458, 69)
+        Me.runtimes_txt.Size = New System.Drawing.Size(458, 95)
         Me.runtimes_txt.TabIndex = 2
         '
         'Label1
@@ -101,10 +104,11 @@ Partial Class Main
         '
         'cb_moveOnInstall
         '
+        Me.cb_moveOnInstall.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.cb_moveOnInstall.AutoSize = True
         Me.cb_moveOnInstall.Checked = True
         Me.cb_moveOnInstall.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cb_moveOnInstall.Location = New System.Drawing.Point(12, 132)
+        Me.cb_moveOnInstall.Location = New System.Drawing.Point(12, 161)
         Me.cb_moveOnInstall.Name = "cb_moveOnInstall"
         Me.cb_moveOnInstall.Size = New System.Drawing.Size(139, 17)
         Me.cb_moveOnInstall.TabIndex = 4
@@ -113,8 +117,9 @@ Partial Class Main
         '
         'lbl_success
         '
+        Me.lbl_success.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lbl_success.AutoSize = True
-        Me.lbl_success.Location = New System.Drawing.Point(9, 156)
+        Me.lbl_success.Location = New System.Drawing.Point(9, 185)
         Me.lbl_success.Name = "lbl_success"
         Me.lbl_success.Size = New System.Drawing.Size(57, 13)
         Me.lbl_success.TabIndex = 5
@@ -122,8 +127,9 @@ Partial Class Main
         '
         'lbl_fail
         '
+        Me.lbl_fail.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lbl_fail.AutoSize = True
-        Me.lbl_fail.Location = New System.Drawing.Point(9, 172)
+        Me.lbl_fail.Location = New System.Drawing.Point(9, 201)
         Me.lbl_fail.Name = "lbl_fail"
         Me.lbl_fail.Size = New System.Drawing.Size(52, 13)
         Me.lbl_fail.TabIndex = 6
@@ -133,7 +139,7 @@ Partial Class Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(482, 199)
+        Me.ClientSize = New System.Drawing.Size(482, 226)
         Me.Controls.Add(Me.lbl_fail)
         Me.Controls.Add(Me.lbl_success)
         Me.Controls.Add(Me.cb_moveOnInstall)

@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports SevenZipExtractor
 
 
 
@@ -15,20 +14,21 @@ Public Class Main
     'Global Objects
     Public log As New Logging("syslog.txt")
     Public cfg As New Config("config.txt")
+    Dim daz As New DazUnpack()
 
 
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         log.info("Program Started.")
         createRequiredDirectories()
-        'unpackDlls()
+
         'Set proper SevenZip dll location
         If Environment.Is64BitOperatingSystem Then
             log.debug("System Arch: x64, Setting 7-Zip DLL = 7z-x64.dll")
-            'SevenZipBase.SetLibraryPath(Application.StartupPath + "\7z64.dll")
+            daz.sevenZipDllPath = Application.StartupPath + "\7z-x64.dll"
         Else
             log.debug("System Arch: x86, Setting 7-Zip DLL = 7z-x86.dll")
-            'SevenZipBase.SetLibraryPath(Application.StartupPath + "\7z.dll")
+            daz.sevenZipDllPath = Application.StartupPath + "\7z-x86.dll"
         End If
         'Once config Obj is created, It reads in runtimes. So populate UI
         Me.runtimes_txt.Items.Clear()
@@ -69,12 +69,11 @@ Public Class Main
 
 
     Private Sub btn_install_Click(sender As Object, e As EventArgs) Handles btn_install.Click
-        Dim daz As New DazUnpack()
+
         daz.moveArchiveOnComplete = Me.cb_moveOnInstall.Checked
         daz.processedPath = Application.StartupPath + INSTALLED_PATH
         daz.archiveFilesPath = Application.StartupPath + INSTALLERS_PATH
         daz.tempUnpackPath = Application.StartupPath + TEMP_UNPACK
-        'daz.targetRuntime = Application.StartupPath + "\runtime"        '''DEBUG
         daz.targetRuntime = Me.runtimes_txt.SelectedItem
         log.debug("Path for finished files:" + Application.StartupPath + INSTALLED_PATH)
         log.debug("Path for install files to process:" + Application.StartupPath + INSTALLERS_PATH)
