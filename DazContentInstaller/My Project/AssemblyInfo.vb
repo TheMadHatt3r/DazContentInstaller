@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("DazContentInstaller")>
-<Assembly: AssemblyDescription("Simple Install Tool For .ZIP & .RAR Files")>
+<Assembly: AssemblyDescription("Simple Install Tool For .zip, .7z, .rar Files")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("DazContentInstaller")>
 <Assembly: AssemblyCopyright("Copyright © Collin Matthews 2018")>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("1.1.0.0")>
+<Assembly: AssemblyFileVersion("1.1.0.0")>
