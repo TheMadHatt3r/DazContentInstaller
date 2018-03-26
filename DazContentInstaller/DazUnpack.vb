@@ -174,15 +174,15 @@ Public Class DazUnpack
     ''' <param name="destinationPath"></param>
     Private Function CopyDirectory(ByVal sourcePath As String, ByVal destinationPath As String) As Boolean
         Dim sourceDirectoryInfo As New System.IO.DirectoryInfo(sourcePath)
-
         Dim fileSystemInfo As System.IO.FileSystemInfo
+
         Try
             For Each fileSystemInfo In sourceDirectoryInfo.GetFileSystemInfos
-                Dim destinationFileName As String =
-                System.IO.Path.Combine(destinationPath, fileSystemInfo.Name)
+                Dim destinationFileName As String = System.IO.Path.Combine(destinationPath, fileSystemInfo.Name)
 
                 ' Now check whether its a file or a folder and take action accordingly
                 If TypeOf fileSystemInfo Is System.IO.FileInfo Then
+                    System.IO.Directory.CreateDirectory(destinationPath)
                     System.IO.File.Copy(fileSystemInfo.FullName, destinationFileName, True)
                 Else
                     ' Recursively call the mothod to copy all the neste folders
