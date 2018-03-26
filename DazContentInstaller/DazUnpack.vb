@@ -136,17 +136,14 @@ Public Class DazUnpack
             End If
 
             '7) Move or Del .zip/.rar
-            If moveArchiveOnComplete Then
-                'If issue, and file skipped:
-                If errorOnInstall Then
-                    Me.installFailCount += 1
-                    Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath + "\failed")
-                    moveToFinishedLocation(file, processedArchivesPath + "\failed")
-                Else
-                    Me.installSuccessCount += 1
-                    Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath + "\success")
-                    moveToFinishedLocation(file, processedArchivesPath + "\success")
-                End If
+            If errorOnInstall Then
+                Me.installFailCount += 1
+                Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath + "\failed")
+                If moveArchiveOnComplete Then moveToFinishedLocation(file, processedArchivesPath + "\failed")
+            Else
+                Me.installSuccessCount += 1
+                Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath + "\success")
+                If moveArchiveOnComplete Then moveToFinishedLocation(file, processedArchivesPath + "\success")
             End If
 
         Next
