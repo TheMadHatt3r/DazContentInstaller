@@ -215,9 +215,9 @@ Public Class DazUnpack
         Else
             'Else loop through this level looking for match
             For Each tmp In dirList
-                Dim d As String = tmp.Split("\")(tmp.Split("\").GetUpperBound(0))
+                Dim d As String = tmp.Split("\")(tmp.Split("\").GetUpperBound(0)).ToLower
                 'DO ALL MATCHING HERE
-                If d = "data" Or d = "Data" Or d = "Runtime" Or d = "runtime" Then
+                If d = "data" Or d = "runtime" Or d = "people" Then
                     fs.found = True
                     fs.location = tmp
                     fs.type = d
