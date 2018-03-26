@@ -69,6 +69,10 @@ Public Class Main
 
 
     Private Sub btn_install_Click(sender As Object, e As EventArgs) Handles btn_install.Click
+        If Me.runtimes_txt.SelectedIndex = -1 Then
+            MsgBox("Please select a runtime and try again.")
+            Exit Sub
+        End If
 
         daz.moveArchiveOnComplete = Me.cb_moveOnInstall.Checked
         daz.processedPath = Application.StartupPath + INSTALLED_PATH

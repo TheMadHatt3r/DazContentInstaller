@@ -135,13 +135,13 @@ Public Class DazUnpack
             '4) Copy files from fs.location point to runtime folder of same type.
             If Not errorOnInstall Then
                 Main.log.debug(" -Copy " + fs.location + " To " + runtimePath + "\" + fs.type)
-                CopyDirectory(fs.location, runtimePath + "\" + fs.type)
+                'CopyDirectory(fs.location, runtimePath + "\" + fs.type) 'Only got data or runtime, not other folders at same level
+                CopyDirectory(Directory.GetParent(fs.location).FullName, runtimePath)
             End If
 
 
             '5) Copy files/folders at same level as fs.location (minus runtime) to same level in master runtime.
-            '   This could ignore some folders if you are >2 levels deep... But slim chance those matter.
-            '   ?????????? What was this??????? Do we need step 5?
+            ' Handled in #4
 
             '6) Cleanup \temp
             If Not errorOnInstall Then
