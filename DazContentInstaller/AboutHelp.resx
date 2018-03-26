@@ -124,9 +124,7 @@
 2) Copy / Move install files (zip/rar) to "installFiles\" directory local to this program.
 3) Restart program if you have updated the runtime file.
 4) Click "Run Installer" to begin the install.
-
-Copyright Collin Matthews | 2018
-Collin@c-tek.net</value>
+</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

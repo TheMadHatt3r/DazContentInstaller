@@ -73,6 +73,7 @@ Partial Class Main
         '
         'SettingsToolStripMenuItem
         '
+        Me.SettingsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
         Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
         Me.SettingsToolStripMenuItem.Text = "Settings"
@@ -152,7 +153,7 @@ Partial Class Main
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Main"
-        Me.Text = "Daz Archive Installer | Version 0.0.3 - BETA"
+        Me.Text = "Daz Archive Installer | Version 1.0.0"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
