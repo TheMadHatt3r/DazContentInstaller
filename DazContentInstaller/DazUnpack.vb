@@ -14,6 +14,8 @@ Public Class DazUnpack
 
     Public installSuccessCount As Integer = 0
     Public installFailCount As Integer = 0
+    Public runtimeSearchFolders As New List(Of String) From
+        {"data", "runtime", "people", "props", "shaders", "shader presets", "lights", "ligh presets", "templates"}
 
 
     Public Sub New()
@@ -225,7 +227,7 @@ Public Class DazUnpack
             For Each tmp In dirList
                 Dim d As String = tmp.Split("\")(tmp.Split("\").GetUpperBound(0)).ToLower
                 'DO ALL MATCHING HERE
-                If d = "data" Or d = "runtime" Or d = "people" Then
+                If runtimeSearchFolders.Contains(d) Then
                     fs.found = True
                     fs.location = tmp
                     fs.type = d
