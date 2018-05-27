@@ -15,7 +15,7 @@ Public Class DazUnpack
     Public installSuccessCount As Integer = 0
     Public installFailCount As Integer = 0
     Public runtimeSearchFolders As New List(Of String) From
-        {"data", "runtime", "people", "props", "shaders", "shader presets", "lights", "ligh presets", "templates"}
+        {"data", "runtime", "people", "props", "shaders", "shader presets", "lights", "lights presets", "templates"}
 
 
     Public Sub New()
