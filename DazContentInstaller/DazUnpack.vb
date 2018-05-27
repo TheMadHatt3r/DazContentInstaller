@@ -103,67 +103,75 @@ Public Class DazUnpack
 
 
 
-    Public Sub processFiles()
-        '1) Get list of .zip/.rar files in directory:
-        Dim fileList As List(Of String) = getListOfArchives(installFilesPath)
-        For Each file As String In fileList
-            Dim errorOnInstall As Boolean = False
-            Dim FileInfo As New FileInfo(file)
-            Main.log.info("Processing Installer File: " + FileInfo.Name)
+    Public Async Function installArchiveFileAsync(ByVal File) As Task
+        Dim workResult = Await Task.Run(Function() installSingleFile(File))
+    End Function
 
-            '2) Unzip to temp dir
-            If Not unzipToTemp(file) Then
+
+    ''' <summary>
+    ''' Private function to install content file.
+    ''' Call Async and report progress after each call?
+    ''' Ideally you loop through your file list and call this
+    ''' Function for each file.
+    ''' </summary>
+    ''' <param name="file">path to install file</param>
+    Public Function installSingleFile(ByVal file As String)
+
+        Dim errorOnInstall As Boolean = False
+        Dim FileInfo As New FileInfo(file)
+        Main.log.info("Processing Installer File: " + FileInfo.Name)
+
+        '2) Unzip to temp dir
+        If Not unzipToTemp(file) Then
+            errorOnInstall = True
+        End If
+
+        '3) Search dir for one of valid types (Runtime, data etc.)
+        Dim fs As New FinderStruc
+        If Not errorOnInstall Then
+            Dim res As String = searchTempForInstallPoint(tempArchiveUnpackPath, fs)
+            If res = "NO_STRUC_FOUND" Then
+                Main.log.info(" -Runtime point NOT FOUND!")
+                errorOnInstall = True
+            ElseIf res = "FOUND" Then
+                Main.log.debug(" -Type of runtime found:" + fs.type)
+            Else
+                Main.log.err(" -Error finding runtime point? This is a program error, and should never happen...")
                 errorOnInstall = True
             End If
-
-            '3) Search dir for one of valid types (Runtime, data etc.)
-            Dim fs As New FinderStruc
-            If Not errorOnInstall Then
-                Dim res As String = searchTempForInstallPoint(tempArchiveUnpackPath, fs)
-                If res = "NO_STRUC_FOUND" Then
-                    Main.log.info(" -Runtime point NOT FOUND!")
-                    errorOnInstall = True
-                ElseIf res = "FOUND" Then
-                    Main.log.debug(" -Type of runtime found:" + fs.type)
-                Else
-                    Main.log.err(" -Error finding runtime point? This is a program error, and should never happen...")
-                    errorOnInstall = True
-                End If
-            End If
+        End If
 
 
-            '4) Copy files from fs.location point to runtime folder of same type.
-            If Not errorOnInstall Then
-                Main.log.debug(" -Copy " + fs.location + " To " + runtimePath + "\" + fs.type)
-                'CopyDirectory(fs.location, runtimePath + "\" + fs.type) 'Only got data or runtime, not other folders at same level
-                CopyDirectory(Directory.GetParent(fs.location).FullName, runtimePath)
-            End If
+        '4) Copy files from fs.location point to runtime folder of same type.
+        If Not errorOnInstall Then
+            Main.log.debug(" -Copy " + fs.location + " To " + runtimePath + "\" + fs.type)
+            'CopyDirectory(fs.location, runtimePath + "\" + fs.type) 'Only got data or runtime, not other folders at same level
+            CopyDirectory(Directory.GetParent(fs.location).FullName, runtimePath)
+        End If
 
 
-            '5) Copy files/folders at same level as fs.location (minus runtime) to same level in master runtime.
-            ' Handled in #4
+        '5) Copy files/folders at same level as fs.location (minus runtime) to same level in master runtime.
+        ' Handled in #4
 
-            '6) Cleanup \temp
-            If Not errorOnInstall Then
-                Main.log.debug(" -Clearing \temp")
-                cleanDirectory(tempArchiveUnpackPath)
-            End If
+        '6) Cleanup \temp
+        If Not errorOnInstall Then
+            Main.log.debug(" -Clearing \temp")
+            cleanDirectory(tempArchiveUnpackPath)
+        End If
 
-            '7) Move or Del .zip/.rar
-            If errorOnInstall Then
-                Me.installFailCount += 1
-                Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath + "\failed")
-                If moveArchiveOnComplete Then moveToFinishedLocation(file, processedArchivesPath + "\failed")
-            Else
-                Me.installSuccessCount += 1
-                Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath + "\success")
-                If moveArchiveOnComplete Then moveToFinishedLocation(file, processedArchivesPath + "\success")
-            End If
+        '7) Move or Del .zip/.rar
+        If errorOnInstall Then
+            Me.installFailCount += 1
+            Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath + "\failed")
+            If moveArchiveOnComplete Then moveToFinishedLocation(file, processedArchivesPath + "\failed")
+        Else
+            Me.installSuccessCount += 1
+            Main.log.debug(" -Moving Installed Archive (zip/rar) to " + processedArchivesPath + "\success")
+            If moveArchiveOnComplete Then moveToFinishedLocation(file, processedArchivesPath + "\success")
+        End If
 
-        Next
-    End Sub
-
-
+        'Return True 'ALWAYS DOES...
+    End Function
 
 
     ''' <summary>
@@ -237,13 +245,6 @@ Public Class DazUnpack
     End Function
 
 
-    Private Function getListOfArchives(ByVal dir As String) As List(Of String)
-        '1) Get list of .zip/.rar files in directory:
-        Main.log.info("Searching for installers (.zip/.rar) in:" + dir)
-        Dim fileList As List(Of String) = Directory.GetFiles(dir).ToList
-        Main.log.info("Files Found to Install:" + fileList.Count.ToString)
-        Return fileList
-    End Function
 
     'Returns false on error.
     Private Function unzipToTemp(ByVal file As String) As Boolean

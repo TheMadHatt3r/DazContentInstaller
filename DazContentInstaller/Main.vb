@@ -68,7 +68,7 @@ Public Class Main
 
 
 
-    Private Sub btn_install_Click(sender As Object, e As EventArgs) Handles btn_install.Click
+    Private Async Sub btn_install_Click(sender As Object, e As EventArgs) Handles btn_install.Click
 
         If Me.runtimes_txt.SelectedIndex = -1 Then
             MsgBox("Please select a runtime and try again.")
@@ -85,7 +85,17 @@ Public Class Main
         log.debug("Path for finished files:" + Application.StartupPath + INSTALLED_PATH)
         log.debug("Path for install files to process:" + Application.StartupPath + INSTALLERS_PATH)
         log.debug("Target Runtime:" + Me.runtimes_txt.SelectedItem)
-        daz.processFiles()
+
+        'Get list of archives to install
+        Dim fileList As List(Of String) = getListOfArchives(daz.archiveFilesPath)
+        For Each file As String In fileList
+            Await Task.Run(Function() daz.installArchiveFileAsync(file))
+            Me.pb_install.Value = (daz.installSuccessCount + daz.installFailCount) / fileList.Count * 100
+            Me.lbl_success.Text = "Success:" + daz.installSuccessCount.ToString
+        Next
+
+
+
 
         Me.lbl_fail.Text = "Failures:" + daz.installFailCount.ToString
         Me.lbl_success.Text = "Success:" + daz.installSuccessCount.ToString
@@ -95,6 +105,15 @@ Public Class Main
 
     End Sub
 
+    Private Function getListOfArchives(ByVal dir As String) As List(Of String)
+        '1) Get list of .zip/.rar files in directory:
+        Me.log.info("Searching for installers (.zip/.rar) in:" + dir)
+        Dim fileList As List(Of String) = Directory.GetFiles(dir).ToList
+        Me.log.info("Files Found to Install:" + fileList.Count.ToString)
+        Return fileList
+    End Function
+
+
     ' TOOL STRIP ACTIONS
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         Dim about = New AboutHelp()
@@ -103,4 +122,5 @@ Public Class Main
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         Me.Close()
     End Sub
+
 End Class

@@ -34,6 +34,7 @@ Partial Class Main
         Me.cb_moveOnInstall = New System.Windows.Forms.CheckBox()
         Me.lbl_success = New System.Windows.Forms.Label()
         Me.lbl_fail = New System.Windows.Forms.Label()
+        Me.pb_install = New System.Windows.Forms.ProgressBar()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -42,9 +43,9 @@ Partial Class Main
         Me.btn_install.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_install.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_install.Location = New System.Drawing.Point(288, 161)
+        Me.btn_install.Location = New System.Drawing.Point(288, 215)
         Me.btn_install.Name = "btn_install"
-        Me.btn_install.Size = New System.Drawing.Size(182, 54)
+        Me.btn_install.Size = New System.Drawing.Size(182, 37)
         Me.btn_install.TabIndex = 0
         Me.btn_install.Text = "Run Installer"
         Me.btn_install.UseVisualStyleBackColor = True
@@ -93,7 +94,7 @@ Partial Class Main
         Me.runtimes_txt.Items.AddRange(New Object() {"Runtime 1", "Runtime 2", "C:\Users\Collin\Documents\GitHub\DazContentInstaller\DazContentInstaller", "Runtime 3", "Runtime 4", "Line 6"})
         Me.runtimes_txt.Location = New System.Drawing.Point(12, 57)
         Me.runtimes_txt.Name = "runtimes_txt"
-        Me.runtimes_txt.Size = New System.Drawing.Size(458, 95)
+        Me.runtimes_txt.Size = New System.Drawing.Size(458, 121)
         Me.runtimes_txt.TabIndex = 2
         '
         'Label1
@@ -111,7 +112,7 @@ Partial Class Main
         Me.cb_moveOnInstall.AutoSize = True
         Me.cb_moveOnInstall.Checked = True
         Me.cb_moveOnInstall.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cb_moveOnInstall.Location = New System.Drawing.Point(12, 161)
+        Me.cb_moveOnInstall.Location = New System.Drawing.Point(12, 199)
         Me.cb_moveOnInstall.Name = "cb_moveOnInstall"
         Me.cb_moveOnInstall.Size = New System.Drawing.Size(139, 17)
         Me.cb_moveOnInstall.TabIndex = 4
@@ -122,7 +123,7 @@ Partial Class Main
         '
         Me.lbl_success.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lbl_success.AutoSize = True
-        Me.lbl_success.Location = New System.Drawing.Point(9, 185)
+        Me.lbl_success.Location = New System.Drawing.Point(9, 223)
         Me.lbl_success.Name = "lbl_success"
         Me.lbl_success.Size = New System.Drawing.Size(57, 13)
         Me.lbl_success.TabIndex = 5
@@ -132,17 +133,25 @@ Partial Class Main
         '
         Me.lbl_fail.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lbl_fail.AutoSize = True
-        Me.lbl_fail.Location = New System.Drawing.Point(9, 201)
+        Me.lbl_fail.Location = New System.Drawing.Point(9, 239)
         Me.lbl_fail.Name = "lbl_fail"
         Me.lbl_fail.Size = New System.Drawing.Size(52, 13)
         Me.lbl_fail.TabIndex = 6
         Me.lbl_fail.Text = "Failures:0"
         '
+        'pb_install
+        '
+        Me.pb_install.Location = New System.Drawing.Point(288, 186)
+        Me.pb_install.Name = "pb_install"
+        Me.pb_install.Size = New System.Drawing.Size(182, 23)
+        Me.pb_install.TabIndex = 7
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(482, 226)
+        Me.ClientSize = New System.Drawing.Size(482, 264)
+        Me.Controls.Add(Me.pb_install)
         Me.Controls.Add(Me.lbl_fail)
         Me.Controls.Add(Me.lbl_success)
         Me.Controls.Add(Me.cb_moveOnInstall)
@@ -172,4 +181,5 @@ Partial Class Main
     Friend WithEvents cb_moveOnInstall As CheckBox
     Friend WithEvents lbl_success As Label
     Friend WithEvents lbl_fail As Label
+    Friend WithEvents pb_install As ProgressBar
 End Class
