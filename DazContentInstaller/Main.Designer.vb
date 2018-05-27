@@ -43,9 +43,9 @@ Partial Class Main
         Me.btn_install.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_install.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_install.Location = New System.Drawing.Point(288, 215)
+        Me.btn_install.Location = New System.Drawing.Point(313, 313)
         Me.btn_install.Name = "btn_install"
-        Me.btn_install.Size = New System.Drawing.Size(182, 37)
+        Me.btn_install.Size = New System.Drawing.Size(209, 37)
         Me.btn_install.TabIndex = 0
         Me.btn_install.Text = "Run Installer"
         Me.btn_install.UseVisualStyleBackColor = True
@@ -55,7 +55,7 @@ Partial Class Main
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.SettingsToolStripMenuItem, Me.AboutToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(482, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(534, 24)
         Me.MenuStrip1.TabIndex = 1
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -69,7 +69,7 @@ Partial Class Main
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'SettingsToolStripMenuItem
@@ -94,7 +94,7 @@ Partial Class Main
         Me.runtimes_txt.Items.AddRange(New Object() {"Runtime 1", "Runtime 2", "C:\Users\Collin\Documents\GitHub\DazContentInstaller\DazContentInstaller", "Runtime 3", "Runtime 4", "Line 6"})
         Me.runtimes_txt.Location = New System.Drawing.Point(12, 57)
         Me.runtimes_txt.Name = "runtimes_txt"
-        Me.runtimes_txt.Size = New System.Drawing.Size(458, 121)
+        Me.runtimes_txt.Size = New System.Drawing.Size(510, 212)
         Me.runtimes_txt.TabIndex = 2
         '
         'Label1
@@ -112,7 +112,7 @@ Partial Class Main
         Me.cb_moveOnInstall.AutoSize = True
         Me.cb_moveOnInstall.Checked = True
         Me.cb_moveOnInstall.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cb_moveOnInstall.Location = New System.Drawing.Point(12, 199)
+        Me.cb_moveOnInstall.Location = New System.Drawing.Point(12, 290)
         Me.cb_moveOnInstall.Name = "cb_moveOnInstall"
         Me.cb_moveOnInstall.Size = New System.Drawing.Size(139, 17)
         Me.cb_moveOnInstall.TabIndex = 4
@@ -123,7 +123,7 @@ Partial Class Main
         '
         Me.lbl_success.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lbl_success.AutoSize = True
-        Me.lbl_success.Location = New System.Drawing.Point(9, 223)
+        Me.lbl_success.Location = New System.Drawing.Point(9, 321)
         Me.lbl_success.Name = "lbl_success"
         Me.lbl_success.Size = New System.Drawing.Size(57, 13)
         Me.lbl_success.TabIndex = 5
@@ -133,7 +133,7 @@ Partial Class Main
         '
         Me.lbl_fail.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lbl_fail.AutoSize = True
-        Me.lbl_fail.Location = New System.Drawing.Point(9, 239)
+        Me.lbl_fail.Location = New System.Drawing.Point(9, 337)
         Me.lbl_fail.Name = "lbl_fail"
         Me.lbl_fail.Size = New System.Drawing.Size(52, 13)
         Me.lbl_fail.TabIndex = 6
@@ -141,16 +141,17 @@ Partial Class Main
         '
         'pb_install
         '
-        Me.pb_install.Location = New System.Drawing.Point(288, 186)
+        Me.pb_install.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pb_install.Location = New System.Drawing.Point(313, 284)
         Me.pb_install.Name = "pb_install"
-        Me.pb_install.Size = New System.Drawing.Size(182, 23)
+        Me.pb_install.Size = New System.Drawing.Size(209, 23)
         Me.pb_install.TabIndex = 7
         '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(482, 264)
+        Me.ClientSize = New System.Drawing.Size(534, 362)
         Me.Controls.Add(Me.pb_install)
         Me.Controls.Add(Me.lbl_fail)
         Me.Controls.Add(Me.lbl_success)

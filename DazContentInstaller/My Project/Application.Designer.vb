@@ -34,10 +34,5 @@ Namespace My
         Protected Overrides Sub OnCreateMainForm()
             Me.MainForm = Global.DazContentInstaller.Main
         End Sub
-        
-        <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
-        Protected Overrides Sub OnCreateSplashScreen()
-            Me.SplashScreen = Global.DazContentInstaller.Splash
-        End Sub
     End Class
 End Namespace
