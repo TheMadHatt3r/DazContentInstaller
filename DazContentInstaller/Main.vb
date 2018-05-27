@@ -98,14 +98,12 @@ Public Class Main
             Await Task.Run(Function() daz.installArchiveFileAsync(file))
             Me.pb_install.Value = (daz.installSuccessCount + daz.installFailCount) / fileList.Count * 100
             Me.lbl_success.Text = "Success:" + daz.installSuccessCount.ToString
+            Me.lbl_fail.Text = "Failures:" + daz.installFailCount.ToString
         Next
 
-
-
-
+        'Any final updated numbers here, and change button back.
         Me.lbl_fail.Text = "Failures:" + daz.installFailCount.ToString
         Me.lbl_success.Text = "Success:" + daz.installSuccessCount.ToString
-
         btn_install.Text = "Run Installer"
 
 
